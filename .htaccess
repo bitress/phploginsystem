@@ -1,0 +1,15 @@
+
+Options All -Indexes
+RewriteEngine On
+RewriteBase /phpLoginRegister
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+#RewriteRule ^user/(.*/([a-zA-Z0-9_-]+)|([a-zA-Z0-9_-]+))/?$ /profile.php?username=$1 [L]
+
+
+RewriteRule sendData includes/sendData.php
+
+ErrorDocument 404 /includes/404.php
