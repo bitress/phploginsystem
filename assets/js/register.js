@@ -3,7 +3,6 @@ $(function(){
 
         let notyf = new Notyf({duration: 1000, position: {x: 'right', y: 'top',}});
 
-
         let username = $("#username").val();
         let email = $("#email").val();
         let password = $("#password").val();
