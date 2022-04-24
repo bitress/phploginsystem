@@ -1,6 +1,5 @@
 <?php
 
-include_once __DIR__ .'/../vendor/autoload.php';
 include_once 'Configuration.php';
 include_once __DIR__. '/../db/Database.php';
 include_once __DIR__. '/../includes/Session.php';

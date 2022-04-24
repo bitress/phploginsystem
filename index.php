@@ -45,10 +45,12 @@ include_once 'config/init.php';
     </div>
 </nav>
         <div class="container">
+
             <div class="jumbotron m-4">
                 <h3>Hello <?= htmlentities($userDetail['username']) ?></h3>
                 <a href="logout.php">Logout</a>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <h3>Change Email</h3>

@@ -1,8 +1,5 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 class Register
 {
@@ -13,12 +10,10 @@ class Register
      */
 
     private Login $login;
-    private PHPMailer $email;
 
     public function __construct() {
         $this->db = Database::getInstance();
         $this->login = new Login();
-        $this->email = new PHPMailer();
     }
 
     public function userRegister(string $username, string $email, string $password, string $confirm_password, int $captcha ){
@@ -71,9 +66,6 @@ class Register
 
     }
 
-    private function sendConfirmationCode($email){
-
-    }
 
     /**
      * Generate register captcha

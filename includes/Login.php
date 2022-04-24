@@ -28,9 +28,9 @@ class Login
     * User login function
     * @param string $username User's username
      * @param string $password User's password
-     * @return bool TRUE if okay, FALSE otherwise
+     * @return void TRUE if okay, FALSE otherwise
      **/
-    public function userLogin($username, $password) {
+    public function userLogin(string $username, string $password) {
 
         $username = trim($username);
         $password = trim($password);
