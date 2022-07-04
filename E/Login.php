@@ -82,9 +82,6 @@ class Login
 
     }
 
-    public function updateUserActivity($id){
-
-    }
 
     public function changePassword($password, $confirm_password, $email){
 
