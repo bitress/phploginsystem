@@ -83,6 +83,32 @@ class Login
     }
 
 
+    /**
+     * Update user login activity
+     * @param $id User's id
+     * @return void
+     */
+    public function updateUserActivity($id){
+
+        $date_time = date("Y-m-d h:i:s");
+
+        try {
+
+            $sql = "UPDATE `user_activity` SET `last_activity` = :la WHERE `user_id` = :uid";
+
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":uid", $id, PDO::PARAM_INT);
+            $stmt->bindParam(":la", $date_time, PDO::PARAM_STR);
+            if ($stmt->execute()){
+                return true;
+            }
+
+        } catch (Exception $e) {
+            echo "Error: ". $e;
+        }
+
+    }
+
     public function changePassword($password, $confirm_password, $email){
 
         if (!$this->checkEmail($email)){

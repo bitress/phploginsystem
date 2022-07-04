@@ -53,8 +53,12 @@ if (isset($_POST['action'])){
                 echo "true";
             }
             break;
-        case 'resetPassword';
-
+        case 'updateActivity';
+                $login = new Login();
+                $response = $login->updateUserActivity($_POST['id']);
+                if ($response === true){
+                    echo "true";
+                }
           break;
 
         default:

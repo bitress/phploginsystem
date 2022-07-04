@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Other functions
+ */
 class Miscellaneous
 {
 

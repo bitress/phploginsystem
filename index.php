@@ -28,6 +28,9 @@ include_once 'config/init.php';
     <!--    Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css"/>
+    <script>
+        let id = <?= htmlentities($userDetail['user_id']) ?>;
+    </script>
 </head>
 <body>
 

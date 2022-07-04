@@ -81,17 +81,17 @@ class Register
 
                  $uid = $this->db->lastInsertId();
 
-                 $sql = "INSERT INTO `user_details` (`user_id`) VALUES (:uid)";
-                 $stmt = $this->db->prepare($sql);
-                 $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
-                 if($stmt->execute()){
+               
+                if ($this->setUserData($uid)){
 
-                     if (EMAIL_CONFIRMATION){
-                         $this->mailer->sendEmailConfirmation($email, $confirmation_code);
-                     }
+                    if (EMAIL_CONFIRMATION){
+                        $this->mailer->sendEmailConfirmation($email, $confirmation_code);
+                    }
 
-                     return true;
-                 }
+                return true;
+
+                }
+
              }
 
          } catch(Exception $e){
@@ -99,6 +99,38 @@ class Register
          }
 
 
+    }
+
+    /**
+     * Insert other user info to database
+     * @param $uid User id
+     * @return bool|void
+     */
+    private function setUserData($uid){
+
+        $date_time = date("Y-m-d h:i:s");
+
+        try {
+
+            $sql = "INSERT INTO `user_details` (`user_id`) VALUES (:uid)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+            if($stmt->execute()){
+
+                $sql = "INSERT INTO `user_activity` (user_id, last_activity) VALUES (:uid, :la)";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindParam(":uid", $uid, PDO::PARAM_INT);
+                $stmt->bindParam(":la", $date_time, PDO::PARAM_STR);
+
+                if ($stmt->execute()){
+                    return true;
+                }
+
+            }
+
+        } catch (Exception $e){
+            echo "Error: ". $e;
+        }
     }
 
 

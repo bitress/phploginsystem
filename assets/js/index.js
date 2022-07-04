@@ -197,7 +197,24 @@ $(function() {
 
     })
 
-    
+    function updateActivity(){
+
+        $.ajax({
+            url: "sendData",
+            type: "post",
+            data: {action: "updateActivity", id: id},
+            success: function (data){
+                // console.log(data)
+            }
+        })
+    }
+
+    setInterval(function(){
+        updateActivity();
+    }, 3000);
+
+
 });
+
 
 

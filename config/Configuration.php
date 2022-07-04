@@ -9,7 +9,7 @@ const APP_NAME = "phpLoginRegister";
 
 const APP_URL = "http://localhost/phploginsystem";
 
-const EMAIL_CONFIRMATION = true;
+const EMAIL_CONFIRMATION = false;
 
 const IS_SMTP = true;
 const SMTP_HOST = "smtp.gmail.com";
