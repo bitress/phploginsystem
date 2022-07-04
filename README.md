@@ -1,29 +1,34 @@
 # phpauthsystem
 
-PHP Login Register System
+**PHP Login Register System**
 
-Features
-Ajax Login
-PDO OOP PHP
+**Features**
 
-- Profile edit [done]
-- Secure Login & Register [done]
-- Change password function [done]
-- Change email function [done]
-- Password reset [in progress]
-- Send email confirmation [done]
-- Remember me feature
-- Online/Offline [
-- Hashed password [done]
-- Messaging system 
+Ajax Login 
+PDO OOP 
+
+ - [x] Profile edit [done]
+ - [x] Secure Login & Register [done]
+ - [x] Change password function [done]
+ - [x] Change email function [done]
+ - [ ] Password reset [in progress]
+ - [x] Send email confirmation [done]
+ - [ ] Remember me feature
+ - [ ] Online/Offline [
+ - [x] Hashed password [done]
+ - [ ] Messaging system [in progress]
 
 Admin
 Dashboard
- Total users
- recent sign up
- active users
+
+ - Total users  
+ - recent sign up  
+ - active users
+
 View user
  All users
  single user
- update. delete
+ update
+ delete
 Add user
+
