@@ -204,16 +204,37 @@ $(function() {
             type: "post",
             data: {action: "updateActivity", id: id},
             success: function (data){
-                // console.log(data)
+                console.log(data)
             }
         })
+    }
+
+
+    function userStatus(){
+
+        $.ajax({
+            url: "sendData",
+            type: 'post',
+            data: {
+                action: 'checkActivity',
+                id: id
+            }, success: function (data){
+                if (data.status == "0"){
+                    $("#status").addClass("offline")
+                } else {
+                    $("#status").addClass("online")
+                }
+            }
+        })
+
+
     }
 
     setInterval(function(){
         updateActivity();
     }, 3000);
 
-
+    userStatus();
 });
 
 

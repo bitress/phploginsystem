@@ -1,8 +1,6 @@
 <?php
 include_once 'config/init.php';
 
-use PragmaRX\Google2FA\Google2FA;
+$login = new Login();
 
-$google2fa = new Google2FA();
-
-echo $google2fa->generateSecretKey();
+$login->fetchUserActivity();
