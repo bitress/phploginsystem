@@ -15,9 +15,12 @@ class Message {
      */
     private mixed $user;
 
+    private Activity $activity;
+
     public function __construct() {
         $this->db = Database::getInstance();
         $this->user = Session::getSession('uid');
+        $this->activity = new Activity();
     }
 
 
@@ -138,6 +141,25 @@ class Message {
         } catch (\Throwable $th) {
             //throw $th;
         }
+    }
+
+    public function fetchUser(){
+
+        $sql = "SELECT * FROM `user_details` INNER JOIN user_activity ua on user_details.user_id = ua.user_id";
+        $stmt = $this->db->query($sql);
+
+            $output = "";
+
+        while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== FALSE){
+
+            $output .= '<tr>';
+            $output .= '<th scope="row">'. $row['user_id'] .'</th>';
+            $output .= '<td>'. $this->activity->fetchUserActivity($row['user_id'])  .'</td>'  ;
+            $output .= '</tr>';
+        }
+
+        echo $output;
+
     }
 
 

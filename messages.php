@@ -6,6 +6,7 @@ if (!$login->isLoggedIn()) {
     header('Location: login.php' );
 
 } else {
+    $message = new Message();
     $user = new User();
     $userDetail = $user->getUserDetails();
 }
@@ -50,7 +51,21 @@ if (!$login->isLoggedIn()) {
     </div>
 
     <div class="row">
-
+            <table>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                            $message->fetchUser();
+                    ?>
+                    </tbody>
+                </table>
+            </table>
     </div>
 </div>
 

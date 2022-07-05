@@ -6,6 +6,8 @@ include_once 'config/init.php';
         header('Location: login.php' );
 
     } else {
+
+
         $user = new User();
         $userDetail = $user->getUserDetails();
 

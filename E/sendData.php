@@ -54,8 +54,8 @@ if (isset($_POST['action'])){
             }
             break;
         case 'updateActivity';
-                $login = new Login();
-                $response = $login->updateUserActivity($_POST['id']);
+                $act = new Activity();
+                $response = $act->updateUserActivity($_POST['id']);
                 if ($response === true){
                     echo "true";
                 }
