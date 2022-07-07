@@ -1,6 +1,10 @@
 <?php
+
+//header("Content-Type: application/json");
 include_once 'config/init.php';
 
-$login = new Login();
 
-$login->fetchUserActivity();
+
+$login = new Message();
+
+echo ($login->getUserAllMessages(1))  ;

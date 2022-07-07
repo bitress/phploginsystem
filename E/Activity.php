@@ -37,7 +37,7 @@ class Activity
     }
 
 
-    public function fetchUserActivity($id = 1){
+    public function fetchUserActivity($id){
 
         $sql = "SELECT * FROM `user_activity` WHERE`user_id` = :uid";
         $stmt = $this->db->prepare($sql);
@@ -50,12 +50,12 @@ class Activity
             $last_activity = strtotime($row['last_activity']);
 
             if($last_activity > $time){
-                $res = array("status" => "1");
+                return "1";
             } else {
-                $res = array("status" => "0");
+                return "0";
             }
 
-            echo json_encode($res);
+
 
 
         }

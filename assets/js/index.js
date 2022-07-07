@@ -204,14 +204,13 @@ $(function() {
             type: "post",
             data: {action: "updateActivity", id: id},
             success: function (data){
-                console.log(data)
+                // console.log(data)
             }
         })
     }
 
 
     function userStatus(){
-
         $.ajax({
             url: "sendData",
             type: 'post',
@@ -226,8 +225,6 @@ $(function() {
                 }
             }
         })
-
-
     }
 
     setInterval(function(){

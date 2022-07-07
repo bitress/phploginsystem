@@ -33,8 +33,8 @@ class Message {
     public function getMessage($receiver, $sender) {
 
         $sql = "SELECT * FROM messages 
-                LEFT JOIN users_details ON users_details.users_id = messages.sender 
-                LEFT JOIN users ON users.user_id = users_details.users_id
+                LEFT JOIN user_details ON user_details.user_id = messages.sender 
+                LEFT JOIN users ON users.user_id = user_details.user_id
                     WHERE (sender = :s AND receiver = :r)
                      OR (receiver = :s AND sender = :r)";
         $stmt = $this->db->prepare($sql);
@@ -51,67 +51,49 @@ class Message {
      * @param int $user ID of the user (sender), current user
      * @return array all messages
      */
-    public function getUserAllMessages($user, $dropdown = true) {
+    public function getUserAllMessages($user) {
 
 
-        $sql = "SELECT * FROM users INNER JOIN users_settings ON users.user_id = users_settings.user INNER JOIN users_details ON users_settings.user = users_details.users_id WHERE NOT user_id = :u ORDER BY user_id DESC";
+        $sql = "SELECT users.user_id, users.username, user_details.*, user_activity.* FROM `users` INNER JOIN `user_details` ON users.user_id = user_details.user_id INNER JOIN user_activity ON user_activity.user_id = users.user_id WHERE NOT users.user_id = :uid ORDER BY users.user_id DESC;";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':u', $user, PDO::PARAM_STR);
+        $stmt->bindParam(':uid', $user, PDO::PARAM_STR);
         if ($stmt->execute()) {
-            $user_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // fetch all users data except current user
             if ($stmt->rowCount() > 0) {
 
-                foreach ($user_data as $row) {
 
-                    $sql2 = "SELECT * FROM messages WHERE (receiver = :m
-                     OR sender = :m) AND (sender = :u
-                     OR receiver = :u) ORDER BY message_id DESC ";
-                    $stmt2 = $this->db->prepare($sql2);
-                    $stmt2->bindParam(':u', $user, PDO::PARAM_INT);
-                    $stmt2->bindParam(':m', $row['user_id'], PDO::PARAM_INT);
-                    $stmt2->execute();
-                    $message = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($message as $res) {
+                $output = "";
 
-                        $you = $user == $res['sender'] ? "You: " : "";
-
-                        //Made this because my knowledge is low yet
-                        $users = array('username' => $row['username'],
-                            'name' => $row['first_name'] . $row['last_name'],
-                            'user_id' => $row['user_id'],
-                            'profile_image' => $row['profile_image']);
-
-                        if (!empty($res)) {
-                            $mes = array('message_id' => $res['message_id'],
-                                'sender' => $res['sender'],
-                                'receiver' => $res['receiver'],
-                                'message' => $you . $res['message'],
-                                'status' => $res['status'],
-                                'date_created' => $res['date_created']
-                            );
-                        } else {
-                            $mes = array();
-                        }
-
-                        //End of made this
-
-
-                        if ($dropdown) {
-                            return array_merge($users,
-                                $mes );
-                        } else {
-                            return $user_data;
-                        }
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 
 
-                    }
 
-                }
+
+                            $output .= '<a href="#" class="list-group-item list-group-item-action border-0">';
+                            $output .= '<div class="badge bg-success float-right"></div>';
+                            $output .= '<div class="d-flex align-items-start">';
+                            $output .= '<img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="" width="40" height="40">';
+                            $output .= '<div class="flex-grow-1 ml-3">';
+                            $output .= $row['first_name'] . " " . $row['last_name'];
+                            if ($this->activity->fetchUserActivity($row['user_id']) === "0"){
+                                $output .= '  <div class="small"><span class="fas fa-circle chat-offline"></span> Offline</div>';
+                            } else {
+                                $output .= '  <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>';
+                            }
+
+
+                            $output .= '   </div>';
+                            $output .= '</div>';
+                            $output .= '</a>';
+
+
+
+
+                }  // end of while loop ($row)
+                echo $output;
             }
-
         }
-
 
 
     }
@@ -143,24 +125,6 @@ class Message {
         }
     }
 
-    public function fetchUser(){
-
-        $sql = "SELECT * FROM `user_details` INNER JOIN user_activity ua on user_details.user_id = ua.user_id";
-        $stmt = $this->db->query($sql);
-
-            $output = "";
-
-        while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== FALSE){
-
-            $output .= '<tr>';
-            $output .= '<th scope="row">'. $row['user_id'] .'</th>';
-            $output .= '<td>'. $this->activity->fetchUserActivity($row['user_id'])  .'</td>'  ;
-            $output .= '</tr>';
-        }
-
-        echo $output;
-
-    }
 
 
 

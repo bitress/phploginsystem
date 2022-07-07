@@ -61,6 +61,15 @@ if (isset($_POST['action'])){
                 }
           break;
 
+        case 'getSidebarMessage':
+
+            $message = new Message();
+            $response = $message->getUserAllMessages($_POST['id']);
+
+
+
+            break;
+
         default:
             break;
 

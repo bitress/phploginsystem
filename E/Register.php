@@ -66,7 +66,7 @@ class Register
              $hashed_password = password_hash($confirm_password, PASSWORD_DEFAULT);
 
              // generate confirmation code
-             $confirmation_code = Miscellaneous::generateKey();
+             $confirmation_code = Others::generateKey();
 
              $status = (EMAIL_CONFIRMATION)  ? '0' : '1';
 
