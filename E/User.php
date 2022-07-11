@@ -33,6 +33,21 @@ class User
 
     }
 
+    /**
+     * Get user data
+     * @return mixed
+     */
+    public function getUserData($id){
+
+        $sql = "SELECT * FROM `users` INNER JOIN `user_details` ON user_details.user_id = users.user_id WHERE users.user_id = :uid";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam("uid", $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+
     /***
      * Change profile function
      * @return boolean TRUE if profile edit is good, FALSE OTHERWISE

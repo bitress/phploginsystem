@@ -32,8 +32,7 @@ class Others
     {
         $userIP = self::getUserIpAddress();
         $userBrowser = $_SERVER['HTTP_USER_AGENT'];
-        $loginString = hash('sha512',$userIP . $userBrowser);
-        return $loginString;
+        return hash('sha512',$userIP . $userBrowser);
     }
 
 

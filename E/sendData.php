@@ -66,7 +66,24 @@ if (isset($_POST['action'])){
             $message = new Message();
             $response = $message->getUserAllMessages($_POST['id']);
 
+            break;
+        case 'getAllMessages':
 
+            $message = new Message();
+            $response = $message->getMessage($_POST['receiver'], $_POST['sender']);
+
+            break;
+        case 'sendMessage':
+
+            $message = new Message();
+            $response = $message->sendMessage($_POST['receiver'], $_POST['message']);
+
+            break;
+
+        case 'getChatHeader':
+
+            $message = new Message();
+            $response = $message->getChatHeader($_POST['id']);
 
             break;
 
