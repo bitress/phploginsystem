@@ -14,9 +14,9 @@ PDO OOP
  - [ ] Password reset [in progress]
  - [x] Send email confirmation [done]
  - [ ] Remember me feature
- - [ ] Online/Offline [
+ - [x] Online/Offline [done]
  - [x] Hashed password [done]
- - [ ] Messaging system [in progress]
+ - [x] Messaging system 
 
 Admin
 Dashboard
