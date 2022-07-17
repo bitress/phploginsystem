@@ -48,7 +48,7 @@ $(function() {
             },
             success: function (res){
                 var data = JSON.parse(res);
-
+                $(".user-avatar").attr("src",data.avatar);
                 $("#user_name").text(data.name);
                 $("#receiver_id").val(data.user_id);
 
@@ -72,6 +72,7 @@ $(function() {
             success: function (res){
 
               var data = JSON.parse(res);
+              console.log(data)
                 var output = [];
                 for(var i=0; i<data.messages.length; i++) {
                     output += buildSideBarMessage(data.messages[i]);
@@ -137,8 +138,8 @@ $(function() {
         var html =  '';
             html += '<div class="chat-message-right pb-4">';
             html += '<div>';
-            html += '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">';
-            html += '<div class="text-muted small text-nowrap mt-2">2:33 am</div>';
+            html += '<img src="'+ res.avatar +'" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">';
+            html += '<div class="text-muted small text-nowrap mt-2">'+ res.timestamp +'</div>';
             html += '</div>';
             html += '<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">';
             html += '     <div class="font-weight-bold mb-1">You</div>';
@@ -158,7 +159,7 @@ function buildSideBarMessage(res){
    let    html = '<a id="getMess" data-incoming="'+res.user_id+'" class="getMess list-group-item list-group-item-action border-0">';
                            html += '<div class="badge bg-success float-right"></div>';
                            html += '<div class="d-flex align-items-start">';
-                           html += '<img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="" width="40" height="40">';
+                           html += '<img src="'+ res.avatar +'" class="rounded-circle mr-1" alt="" width="40" height="40">';
                            html += '<div class="flex-grow-1 ml-3">';
                            html += res.name;
                            if(res.activity === "0"){

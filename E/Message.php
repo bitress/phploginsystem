@@ -51,8 +51,8 @@ class Message {
 
                         $output .= '<div class="chat-message-right pb-4">';
                         $output .= '<div>';
-                        $output .= '<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">';
-                        $output .= '<div class="text-muted small text-nowrap mt-2">2:33 am</div>';
+                        $output .= '<img src="'. $mess['avatar'] .'" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">';
+                        $output .= '<div class="text-muted small text-nowrap mt-2">'. Others::relativeDate(strtotime($mess['date_created'])) .'</div>';
                         $output .= '</div>';
                         $output .= '<div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">';
                         $output .= '     <div class="font-weight-bold mb-1">You</div>';
@@ -64,8 +64,8 @@ class Message {
 
                         $output .= '     <div class="chat-message-left pb-4">';
                         $output .= '      <div>';
-                        $output .= '          <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">';
-                        $output .= '          <div class="text-muted small text-nowrap mt-2">2:34 am</div>';
+                        $output .= '          <img src="'. $mess['avatar'] .'" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">';
+                        $output .= '          <div class="text-muted small text-nowrap mt-2">'. Others::relativeDate(strtotime($mess['date_created'])) .'</div>';
                         $output .= '     </div>';
                         $output .= '      <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">';
                         $output .= '          <div class="font-weight-bold mb-1">'.  $mess['first_name'] .'</div>';
@@ -104,7 +104,8 @@ class Message {
 
             $data = [
                 'user_id' => $row['user_id'],
-                'name' => $name
+                'name' => $name,
+                'avatar' => $row['avatar']
             ];
 
 
@@ -159,6 +160,7 @@ class Message {
 
 
                                 $data = [
+                                    'avatar' => $r['avatar'],
                                     'user_id' => $r['user_id'],
                                     'sender' => $res['sender'],
                                     'receiver' => $res['receiver'],
@@ -171,6 +173,7 @@ class Message {
                             } else {
 
                                 $data = [
+                                    'avatar' => $r['avatar'],
                                     'user_id' => $r['user_id'],
                                     'sender' => null,
                                     'receiver' => null,
@@ -194,57 +197,6 @@ class Message {
             }
 
         }
-
-//  /**
-//     * Get all the messages of the user for side bar
-//     * @param int $user ID of the user (sender), current user
-//     * @return array all messages
-//     */
-//    public function getUserAllMessages($user) {
-//
-//
-//        $sql = "SELECT users.user_id, users.username, user_details.*, user_activity.* FROM `users` INNER JOIN `user_details` ON users.user_id = user_details.user_id INNER JOIN user_activity ON user_activity.user_id = users.user_id WHERE NOT users.user_id = :uid ORDER BY users.user_id DESC;";
-//        $stmt = $this->db->prepare($sql);
-//        $stmt->bindParam(':uid', $user, PDO::PARAM_STR);
-//        if ($stmt->execute()) {
-//            // fetch all users data except current user
-//            if ($stmt->rowCount() > 0) {
-//
-//
-//                $output = "";
-//
-//                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//
-//
-//
-//
-//
-//                            $output .= '<a href="#" class="list-group-item list-group-item-action border-0">';
-//                            $output .= '<div class="badge bg-success float-right"></div>';
-//                            $output .= '<div class="d-flex align-items-start">';
-//                            $output .= '<img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="" width="40" height="40">';
-//                            $output .= '<div class="flex-grow-1 ml-3">';
-//                            $output .= $row['first_name'] . " " . $row['last_name'];
-//                            if ($this->activity->fetchUserActivity($row['user_id']) === "0"){
-//                                $output .= '  <div class="small"><span class="fas fa-circle chat-offline"></span> Offline</div>';
-//                            } else {
-//                                $output .= '  <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>';
-//                            }
-//
-//
-//                            $output .= '   </div>';
-//                            $output .= '</div>';
-//                            $output .= '</a>';
-//
-//
-//
-//
-//                }  // end of while loop ($row)
-//                echo $output;
-//            }
-//        }
-
-
     }
 
     /**
@@ -256,9 +208,6 @@ class Message {
     public function sendMessage($receiver, $message) {
 
         try {
-            //code...
-
-            $encrypted_message = ($message);
 
             $sql = "INSERT INTO messages (sender, receiver, message) VALUES (:s, :r, :m)";
             $stmt = $this->db->prepare($sql);
@@ -268,10 +217,11 @@ class Message {
             if ($stmt->execute()) {
 
                 $data = [
-                    'message' => htmlentities($message)
+                    'message' => htmlentities($message),
+                    'timestamp' => Others::relativeDate(now())
                 ];
 
-echo  json_encode($data);
+            echo  json_encode($data);
 
             }
 

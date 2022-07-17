@@ -16,6 +16,8 @@ include_once 'config/init.php';
         $birthday = date('j', strtotime($userDetail['birthdate']));
 
     }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,7 +72,7 @@ include_once 'config/init.php';
         <div class="container">
 
             <div class="jumbotron m-4">
-                <img src="<?= htmlentities($userDetail['avatar']) ?>" class="img-thumbnail" width="250px" height="250px">
+                <img src="<?= htmlentities($userDetail['avatar']) ?>" class="img-thumbnail" width="150px" height="150px">
                 <h3>Hello <?= htmlentities($userDetail['username']) ?> &nbsp;<span id="status"></span></h3>
 
                 <a href="logout.php">Logout</a>

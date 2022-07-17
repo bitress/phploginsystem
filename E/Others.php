@@ -48,6 +48,11 @@ class Others
         return md5(time() . $uniquekey . time());
     }
 
+    /**
+     * Upload user's avatar
+     * @param $file
+     * @return string|void
+     */
     public static function uploadAvatar($file)  {
         if(isset($file))
         {
@@ -56,6 +61,26 @@ class Others
             $destination = '../uploads/avatars/' . $new_name;
             move_uploaded_file($file['tmp_name'], $destination);
             return $new_name;
+        }
+    }
+
+
+    public static function relativeDate($datetime) {
+        $now = strtotime(date('M j, Y'));
+
+        $relativeDay = ($datetime - $now) / 86400;
+
+        if ($relativeDay >= 0 && $relativeDay < 1) {
+            return 'Today ' . date('h:i A', $datetime);
+        }
+
+        if ($relativeDay >= -1 && $relativeDay < 0) {
+            return 'Yesterday '. date('h:i A', $datetime);
+        }
+
+        if (abs($relativeDay) > 2) {
+
+            return date('l, j F, Y h:i A', $datetime);
         }
     }
 
