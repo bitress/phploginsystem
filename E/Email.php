@@ -94,7 +94,7 @@ class Email
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = APP_NAME. " - Password Reset";
-        $mail->Body    = "<p>Thank you for registering on ". APP_NAME ." </p><p>Please reset your password by clicking on the link below:</p><a href='". $link. "'>Reset Password</a> <br/><br/><p>If you can't click on that link, just copy and paste following url: </p><p>". $link ."</p>Thanks, <br/>". APP_NAME;
+        $mail->Body    = "<p>It looks like you forgot your password on ". APP_NAME ." </p><p>Please reset your password by clicking on the link below:</p><a href='". $link. "'>Reset Password</a> <br/><br/><p>If you can't click on that link, just copy and paste following url: </p><p>". $link ."</p>Thanks, <br/>". APP_NAME;
 
         if( ! $mail->send() ) {
             echo 'Message could not be sent. ';

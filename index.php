@@ -93,6 +93,10 @@ include_once 'config/init.php';
                     <h3>Change Profile</h3>
                     <form>
                         <div class="mb-3">
+                            <label for="profile_image">Profile Image</label>
+                            <input type="file" class="form-control" id="profile_image">
+                        </div>
+                        <div class="mb-3">
                             <label for="firstname-input">First Name</label>
                             <input type="text" class="form-control" value="<?= htmlentities($userDetail['first_name']) ?>" id="firstname-input">
                         </div>

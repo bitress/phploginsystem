@@ -5,6 +5,9 @@ $(function() {
     $("#changeProfileBtn").on("click", function(event){
 
 
+        let data = new FormData();
+
+
 
         let email = $("#email-input").val();
         let first_name = $("#firstname-input").val();

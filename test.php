@@ -1,10 +1,11 @@
 <?php
 
-header("Content-Type: application/json");
+//header("Content-Type: application/json");
 include_once 'config/init.php';
 
 
 
-$login = new Message();
+$login = new User();
 
-echo ($login->getMessage(1, 3))  ;
+
+echo $login->getUserDataByEmail('itscyanne@gmail.com')  ;

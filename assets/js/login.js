@@ -70,12 +70,14 @@ $(function() {
             url: 'sendData',
             type: "POST",
             data: {
-                action: 'resetPassword',
+                action: 'sendResetCode',
                 email: email
             },
             beforeSend: function(){
                 $("#forgotPasswordBtn").html('<i class="fa fa-spinner spin"></i> Resetting Password... &nbsp;');
             }, success: function(response){
+
+                console.log(response);
 
                 $("#forgotPasswordBtn").html('<i class="fa fa-spinner spin"></i> Reset Password&nbsp;');
             }

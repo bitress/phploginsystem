@@ -48,6 +48,27 @@ class User
 
     }
 
+    /**
+     * Get user data by email
+     * @return mixed
+     */
+    public function getUserDataByEmail($email){
+
+        $sql = "SELECT * FROM `users` INNER JOIN `user_details` ON user_details.user_id = users.user_id WHERE users.email = :em";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":em", $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0){
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return 0;
+        }
+
+
+
+    }
+
     /***
      * Change profile function
      * @return boolean TRUE if profile edit is good, FALSE OTHERWISE

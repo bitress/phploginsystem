@@ -53,6 +53,27 @@ if (isset($_POST['action'])){
                 echo "true";
             }
             break;
+
+        case 'sendResetCode':
+
+            $reset = new PasswordReset();
+            $response = $reset->RequestResetPassword($_POST['email']);
+
+            if ($response === true){
+                echo 'true';
+            }
+
+            break;
+
+        case 'resetPassword':
+
+            $reset = new PasswordReset();
+            $response = $reset->resetPassword($_POST['new_password'], $_POST['key']);
+            if ($response === true){
+                echo "true";
+            }
+            break;
+
         case 'updateActivity';
                 $act = new Activity();
                 $response = $act->updateUserActivity($_POST['id']);

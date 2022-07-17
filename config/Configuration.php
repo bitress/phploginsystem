@@ -15,6 +15,6 @@ const EMAIL_CONFIRMATION = false;
 
 const IS_SMTP = true;
 const SMTP_HOST = "smtp.gmail.com";
-const SMTP_USERNAME = "itscyanne@gmail.com ";
-const SMTP_PASSWORD = "@c1y2a0n1n0e2@";
+const SMTP_USERNAME = "cyannejustinl.vega12@gmail.com ";
+const SMTP_PASSWORD = "itudgsucgyilmonw";
 const SMTP_ENCRYPTION = 465;

@@ -95,9 +95,16 @@ class Message {
 
   $row = $this->u->getUserData($id);
 
+          if (empty($row['first_name'])){
+              $name = $row['username'];
+          } else {
+              $name = $row['first_name'] . ' ' . $row['last_name'];
+
+          }
+
             $data = [
                 'user_id' => $row['user_id'],
-                'name' => $row['first_name'] . ' ' . $row['last_name']
+                'name' => $name
             ];
 
 
@@ -140,6 +147,13 @@ class Message {
                     $stmt->execute();
                         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
+                          if (empty($r['first_name'])){
+                              $name = $r['username'];
+                          } else {
+                              $name = $r['first_name'] . ' ' . $r['last_name'];
+
+                          }
+
                             if($stmt->rowCount() > 0){
 
 
@@ -149,7 +163,7 @@ class Message {
                                     'sender' => $res['sender'],
                                     'receiver' => $res['receiver'],
                                     'message' => $res['message'],
-                                    'name' => $r['first_name']. ' ' . $r['last_name'],
+                                    'name' => $name,
                                     'activity' => $this->activity->fetchUserActivity($r['user_id']),
                                     'hasConversation' => true
                                 ];
@@ -161,7 +175,7 @@ class Message {
                                     'sender' => null,
                                     'receiver' => null,
                                     'message' => "You can message ". $r['first_name']. ' ' . $r['last_name'],
-                                    'name' => $r['first_name']. ' ' . $r['last_name'],
+                                    'name' => $name,
                                     'activity' => $this->activity->fetchUserActivity($r['user_id']),
                                     'hasConversation' => false
                                 ];

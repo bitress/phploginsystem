@@ -7,15 +7,15 @@
 Ajax Login 
 PDO OOP 
 
- - [x] Profile edit [done]
- - [x] Secure Login & Register [done]
- - [x] Change password function [done]
- - [x] Change email function [done]
- - [ ] Password reset [in progress]
- - [x] Send email confirmation [done]
- - [ ] Remember me feature
- - [x] Online/Offline [done]
- - [x] Hashed password [done]
+ - [x] Profile edit
+ - [x] Secure Login & Register 
+ - [x] Change password function 
+ - [x] Change email function 
+ - [x] Password reset
+ - [x] Send email confirmation
+ - [ ] Two Factor Authentication
+ - [x] Online/Offline
+ - [x] Hashed password
  - [x] Messaging system 
 
 Admin
