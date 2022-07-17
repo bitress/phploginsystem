@@ -8,7 +8,6 @@ if (isset($_GET['key'])){
     $confirm_key = "";
 }
 
-
 if ($login->isLoggedIn()) {
     header('Location: index.php');
     die();

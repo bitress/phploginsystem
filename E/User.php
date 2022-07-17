@@ -73,18 +73,48 @@ class User
      * Change profile function
      * @return boolean TRUE if profile edit is good, FALSE OTHERWISE
      */
-    public function editProfile(string $first_name, string $last_name, string $birthdate): bool
+    public function editProfile($avatar, $first_name,  $last_name,  $birthdate)
     {
 
         if (!$this->login->isLoggedIn()){
             return false;
         }
+
+        $user = $this->getUserData($this->user);
+
+        if (!empty($avatar)) {
+
+            if ( 0 < $avatar['error'] ) {
+                echo 'Error: ' . $avatar['error'];
+                return false;
+            }
+
+            $info = getimagesize($avatar['tmp_name']);
+            if ($info === FALSE) {
+                echo "Unable to determine image type of uploaded file";
+                return false;
+            }
+
+            if (($info[2] !== IMAGETYPE_GIF) && ($info[2] !== IMAGETYPE_JPEG) && ($info[2] !== IMAGETYPE_PNG)) {
+                echo "Not a gif/jpeg/png";
+                return false;
+            }
+
+            $avatar = 'uploads/avatars/' . Others::uploadAvatar($avatar);
+        } else {
+            $avatar = $user['avatar'];
+        }
+
+
+
+
         $first_name = trim($first_name);
         $last_name = trim($last_name);
         $birthdate = trim($birthdate);
 
-        $sql = "UPDATE `user_details` SET `first_name` = :first_name, `last_name` = :last_name, `birthdate` = :birthdate WHERE user_id = :uid";
+        $sql = "UPDATE `user_details` SET `avatar` = :avatar, `first_name` = :first_name, `last_name` = :last_name, `birthdate` = :birthdate WHERE user_id = :uid";
         $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":avatar", $avatar, PDO::PARAM_STR);
         $stmt->bindParam(":first_name", $first_name, PDO::PARAM_STR);
         $stmt->bindParam(":last_name", $last_name, PDO::PARAM_STR);
         $stmt->bindParam(":birthdate", $birthdate, PDO::PARAM_STR);
@@ -150,47 +180,42 @@ class User
 
         if (!$this->login->isLoggedIn()){
             return false;
+            die();
         }
 
         try {
-
 
         $oldPassword = trim($oldPassword);
         $newPassword = trim($newPassword);
         $confirmPassword =  trim($confirmPassword);
 
-
         $u = $this->getUserDetails();
         $hashed_password = $u['password'];
 
-        if(password_verify($oldPassword, $hashed_password)){
+            if(password_verify($oldPassword, $hashed_password)){
 
-            $new_hashed_password = password_hash($confirmPassword, PASSWORD_ARGON2ID);
+                $new_hashed_password = password_hash($confirmPassword, PASSWORD_ARGON2ID);
 
-            $sql = "UPDATE `users` SET `password` = :password WHERE `user_id` = :uid";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(":password", $new_hashed_password, PDO::PARAM_STR);
-            $stmt->bindParam(":uid", $this->user, PDO::PARAM_INT);
+                $sql = "UPDATE `users` SET `password` = :password WHERE `user_id` = :uid";
+                $stmt = $this->db->prepare($sql);
+                $stmt->bindParam(":password", $new_hashed_password, PDO::PARAM_STR);
+                $stmt->bindParam(":uid", $this->user, PDO::PARAM_INT);
 
-            if ($stmt->execute()){
-                return true;
+                if ($stmt->execute()){
+                    return true;
+                }
+
+            } else {
+                echo "Old password is incorrect";
+
             }
-
-        } else {
-            echo "Old password is incorrect";
-
-        }
-
-
         } catch (Exception $e){
             echo "Error: Something happened to our end";
         }
 
     }
 
-    public function resetPassword($key, $newpassword){
 
-
-    }
+    
 
 }

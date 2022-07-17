@@ -24,7 +24,8 @@ if (isset($_POST['action'])){
         case 'editProfile':
             $user = new User();
 
-            $response = $user->editProfile($_POST['first_name'], $_POST['last_name'], $_POST['birthdate']);
+            $avatar = !empty($_FILES['avatar']) ? $_FILES['avatar'] : '';
+            $response = $user->editProfile($avatar ,$_POST['first_name'], $_POST['last_name'], $_POST['birthdate']);
             if($response === true){
                 echo "true";
             }

@@ -4,11 +4,7 @@ $(function() {
     /*** Change profile  **/
     $("#changeProfileBtn").on("click", function(event){
 
-
-        let data = new FormData();
-
-
-
+        let avatar = $('#avatar').prop('files')[0];
         let email = $("#email-input").val();
         let first_name = $("#firstname-input").val();
         let last_name = $("#lastname-input").val();
@@ -16,7 +12,17 @@ $(function() {
         let birth_month = $("#birth_month").val();
         let birth_year = $("#birth_year").val();
 
+        let action = "editProfile";
         let birthdate = birth_year + '-' + birth_month + '-' + birth_day;
+
+        let data = new FormData();
+        data.append('avatar', avatar);
+        data.append('email', email);
+        data.append('first_name', first_name);
+        data.append('last_name', last_name);
+        data.append('birthdate',birthdate);
+        data.append('action',action);
+
 
         if (!validateEmail(email)){
             notyf.error("Email is not valid");
@@ -26,13 +32,11 @@ $(function() {
         $.ajax({
             type: "POST",
             url: 'sendData',
-            data: {
-                action: 'editProfile',
-                email: email,
-                first_name: first_name,
-                last_name: last_name,
-                birthdate: birthdate,
-            },
+            data: data,
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
             beforeSend: function(){
                 $('#changeProfileBtn').html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Saving Changes');
             },
@@ -40,6 +44,9 @@ $(function() {
                 if (res === "true"){
                     notyf.success("Saved successfully!");
                     $('#changeProfileBtn').html('&nbsp; Save Changes');
+                    setTimeout(function(){
+                       location.reload()
+                    }, 1000);
                 } else {
                     notyf.error(res);
                     $('#changeProfileBtn').html('&nbsp; Save Changes');
