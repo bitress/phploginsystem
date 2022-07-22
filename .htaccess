@@ -1,7 +1,7 @@
 
 Options All -Indexes
 RewriteEngine On
-RewriteBase /phploginsystem
+RewriteBase /phpLoginRegisterSystem
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

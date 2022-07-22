@@ -70,13 +70,7 @@ if(isset($_GET['id'])){
                 <div class="row g-0">
                     <div class="col-12 col-lg-5 col-xl-3 border-right">
 
-                        <div class="px-4 d-none d-md-block">
-                            <div class="d-flex align-items-center">
-                                <div class="flex-grow-1">
-                                    <input type="text" class="form-control my-3" placeholder="Search...">
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div id="message_sidebar"></div>
 

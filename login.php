@@ -34,6 +34,7 @@ if ($login->isLoggedIn()) {
                     <div class="card-body">
                         <h4 class="card-title">Login to <?= APP_NAME ?> </h4>
                         <form method="POST" id="login_form" class="my-login-validation" novalidate="">
+                            <input type="hidden" name="token" id="token" value="<?= htmlentities(CSRF::generate('login_form')); ?>">
                             <div class="form-group">
                                 <label for="username">Username</label>
                                 <input id="username" type="text" class="form-control" name="username" value="" required autofocus>

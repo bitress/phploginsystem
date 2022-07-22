@@ -1,12 +1,5 @@
 <?php
 
-/***
- * @author Cyanne Justin Vega
- * This class is adapted from another system (FessItUp, removed class), still underconstruction
- *
- */
-
-
 class Message {
 
     private Database $db;
@@ -45,8 +38,6 @@ class Message {
                 $output = "";
 
                while($mess = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-
                     if($mess['sender'] == $this->user){
 
                         $output .= '<div class="chat-message-right pb-4">';
@@ -75,17 +66,10 @@ class Message {
 
                     }
 
-
-
                 } // end foreach
-
                 echo ($output);
             } // end rowCount
-
-
         }
-
-
     }
 
 
@@ -108,16 +92,13 @@ class Message {
                 'avatar' => $row['avatar']
             ];
 
-
-
         echo json_encode($data);
-
     }
 
     /**
      * Get all the messages of the user for side bar
      * @param int $user ID of the user (sender), current user
-     * @return array all messages
+     * @return mixed all messages
      */
     public function getUserAllMessages($user) {
 
@@ -137,10 +118,6 @@ class Message {
 
               foreach ($row as $r) {
 
-
-
-
-
                     $sql = "SELECT * FROM `messages` WHERE (sender = :u OR receiver = :u) AND (receiver = :m OR sender = :m) ORDER BY message_id DESC LIMIT 1";
                     $stmt = $this->db->prepare($sql);
                     $stmt->bindParam(":u", $user, PDO::PARAM_INT);
@@ -152,13 +129,8 @@ class Message {
                               $name = $r['username'];
                           } else {
                               $name = $r['first_name'] . ' ' . $r['last_name'];
-
                           }
-
                             if($stmt->rowCount() > 0){
-
-
-
                                 $data = [
                                     'avatar' => $r['avatar'],
                                     'user_id' => $r['user_id'],
@@ -169,9 +141,7 @@ class Message {
                                     'activity' => $this->activity->fetchUserActivity($r['user_id']),
                                     'hasConversation' => true
                                 ];
-
                             } else {
-
                                 $data = [
                                     'avatar' => $r['avatar'],
                                     'user_id' => $r['user_id'],
@@ -182,20 +152,11 @@ class Message {
                                     'activity' => $this->activity->fetchUserActivity($r['user_id']),
                                     'hasConversation' => false
                                 ];
-
                             }
-
-
-
                             array_push($output['messages'], $data);
-
-
                 }  // end of while loop ($row)
-
                 echo json_encode($output);
-
             }
-
         }
     }
 
@@ -225,8 +186,8 @@ class Message {
 
             }
 
-        } catch (\Throwable $th) {
-            //throw $th;
+        } catch (Exception $e) {
+           echo "Error: ". $e->getMessage();
         }
     }
 

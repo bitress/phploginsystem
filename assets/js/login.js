@@ -7,7 +7,6 @@ $(function() {
     $("#login_button").on("click", function(e){
 
 
-
         let username = $("#username").val();
         let password = $("#password").val();
 
@@ -34,7 +33,8 @@ $(function() {
             data: {
                 action: 'userLogin',
                 username: username,
-                password: password
+                password: password,
+                token: $("#token").val()
             },
             beforeSend: function(){
                 $("#login_button").html('<i class="fa fa-spinner spin"></i> Logging in... &nbsp;');

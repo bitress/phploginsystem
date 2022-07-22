@@ -9,14 +9,18 @@ if (isset($_POST['action'])){
 
         case 'userLogin':
             /** @var $login */
-            $response = $login->userLogin($_POST['username'], $_POST['password']);
+            $response = $login->userLogin($_POST['username'], $_POST['password'], $_POST['token']);
                 if($response === true){
                     echo "true";
                 }
             break;
         case 'userRegister':
            $register = new Register();
-            $response = $register->userRegister($_POST['username'], $_POST['email'], $_POST['password'], $_POST['confirm_password'], $_POST['captcha']);
+            try {
+                $response = $register->userRegister($_POST['username'], $_POST['email'], $_POST['password'], $_POST['confirm_password'], $_POST['captcha'], $_POST['token']);
+            } catch (\PHPMailer\PHPMailer\Exception $e) {
+                echo $e->getMessage();
+            }
             if($response === true){
                 echo "true";
             }

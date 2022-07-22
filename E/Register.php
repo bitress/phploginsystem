@@ -31,7 +31,7 @@ class Register
      * @return bool|void
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    public function userRegister(string $username, string $email, string $password, string $confirm_password, int $captcha ){
+    public function userRegister(string $username, string $email, string $password, string $confirm_password, int $captcha, string $token){
 
         $username = trim($username);
         $email = trim($email);
@@ -40,6 +40,12 @@ class Register
         $captcha = trim($captcha);
 
         $captchaAnswer =  Session::getSession('first_number') + Session::getSession("second_number");
+
+
+        if (!CSRF::check($token, 'register_form')){
+            echo "Unable to process your request.";
+            return false;
+        }
          
          if($this->login->checkUsername($username)){
              echo "Username is already exists";

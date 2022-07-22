@@ -12,11 +12,10 @@ class Login
      * @var Database
      */
     private Database $db;
-    private Activity $activity;
+
 
     public function __construct(){
         $this->db = Database::getInstance();
-        $this->activity = new Activity();
     }
 
     /***
@@ -39,9 +38,10 @@ class Login
     * User login function
     * @param string $username User's username
      * @param string $password User's password
+     * @param string $token login token
      * @return void TRUE if okay, FALSE otherwise
      **/
-    public function userLogin(string $username, string $password)
+    public function userLogin(string $username, string $password, string $token)
     {
 
         $username = trim($username);
@@ -59,6 +59,21 @@ class Login
                     /** @var string $hashed_password **/
                     $hashed_password = $row['password'];
 
+                    if (!CSRF::check($token, 'login_form')){
+                        echo "Unable to process your request.";
+                        return false;
+                    }
+
+                    if ($this->isBruteForce()){
+                        echo "You have exceeded the maximum login attempts. Try again tomorrow.";
+                        return false;
+                    }
+
+                    if ($row['status'] == '0'){
+                        echo "Your account has not been activated yet. Please confirm your account.";
+                        return false;
+                    }
+
                     if(password_verify($password, $hashed_password)){
 
                         /** Log in the user */
@@ -69,6 +84,7 @@ class Login
 
                     } else {
                         echo "Password is incorrect";
+                        $this->increaseLoginAttempt();
                     }
 
                 } else {
@@ -79,31 +95,8 @@ class Login
             }
 
         } catch (Exception $e){
-            echo "Error: " . $e;
+            echo "Error: " . $e->getMessage();
         }
-
-    }
-
-
-
-    public function changePassword($password, $confirm_password, $email){
-
-        if (!$this->checkEmail($email)){
-            echo "No user found with this email!";
-        }
-
-
-        $new_hashed_password = password_hash($confirm_password, PASSWORD_ARGON2ID);
-
-        $sql = "UPDATE `users` SET `password` = :password WHERE `user_id` = :uid";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":password", $new_hashed_password, PDO::PARAM_STR);
-        $stmt->bindParam(":uid", $user, PDO::PARAM_INT);
-
-        if ($stmt->execute()){
-            return true;
-        }
-
 
     }
 
@@ -143,6 +136,72 @@ class Login
     }
 
 
+    /**
+     * Increase log in attempt when password is incorrect
+     * @return void
+     */
+    private function increaseLoginAttempt(){
+
+        $date = date('Y-m-d');
+        $user_ip = Others::getUserIpAddress();
+        $login_attempts = $this->getLoginAttempts();
+
+        if ($login_attempts > 0) {
+            $stmt = $this->db->prepare('UPDATE `login_attempts` SET `attempt` = `attempt` + 1 WHERE `ip_address` = :ip AND `date` = :d');
+            // $stmt->execute([$user_ip,$date]);
+            $stmt->bindParam(':ip', $user_ip, PDO::PARAM_STR);
+            $stmt->bindParam(':d', $date, PDO::PARAM_STR);
+            $stmt->execute();
+        } else {
+            $stmt = $this->db->prepare("INSERT INTO `login_attempts` (`ip_address`, `date`) VALUES (:ip, :d)");
+            $stmt->bindParam(':ip', $user_ip, PDO::PARAM_STR);
+            $stmt->bindParam(':d', $date, PDO::PARAM_STR);
+            $stmt->execute();
+        }
+
+
+
+    }
+
+    /**
+     * Get user log in attempt
+     * @return int
+     */
+    private function getLoginAttempts() {
+
+        $date = date('Y-m-d');
+        $user_ip = Others::getUserIpAddress();
+
+        $sql = "SELECT * FROM `login_attempts` WHERE `ip_address` = :ip AND date = :d";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':ip', $user_ip, PDO::PARAM_STR);
+        $stmt->bindParam(':d', $date, PDO::PARAM_STR);
+        $stmt->execute();
+        $res = $stmt->fetch();
+        if ($stmt->rowCount() == 0) {
+            return 0;
+        } else {
+            return intval($res['attempt']);
+        }
+
+    }
+
+
+    /**
+     * Check if exceeds the number of max attempts
+     * @return bool
+     */
+    private function isBruteForce(){
+        $login_attempts = $this->getLoginAttempts();
+
+        if ($login_attempts > MAX_LOGIN_ATTEMPTS)  {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 
 

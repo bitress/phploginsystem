@@ -61,7 +61,8 @@ $(function(){
                 email: email,
                 password: password,
                 confirm_password: confirm_password,
-                captcha: captcha
+                captcha: captcha,
+                token: $("#token").val()
             },
             beforeSend: function(){
                 //TODO: add before send on register
