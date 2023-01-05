@@ -8,13 +8,13 @@ const DB_NAME = "phpAuthSystem";
 
 const APP_NAME = "phpLoginRegister";
 
-const APP_URL = "http://localhost/phpLoginRegisterSystem";
+const APP_URL = "http://localhost/phploginsystem";
 
-const EMAIL_CONFIRMATION = false;
+const EMAIL_CONFIRMATION = true;
 const MAX_LOGIN_ATTEMPTS = 12;
 
 const IS_SMTP = false;
-const SMTP_HOST = "";
-const SMTP_USERNAME = "";
-const SMTP_PASSWORD = "";
-const SMTP_ENCRYPTION = "";
+const SMTP_HOST = "mail.itscyanne.xyz";
+const SMTP_USERNAME = "no-reply@itscyanne.xyz";
+const SMTP_PASSWORD = "@Cyanne01";
+const SMTP_ENCRYPTION = "tls";

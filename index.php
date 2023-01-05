@@ -7,7 +7,6 @@ include_once 'config/init.php';
 
     } else {
 
-
         $user = new User();
         $userDetail = $user->getUserDetails();
 

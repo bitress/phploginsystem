@@ -42,10 +42,10 @@ class Register
         $captchaAnswer =  Session::getSession('first_number') + Session::getSession("second_number");
 
 
-        if (!CSRF::check($token, 'register_form')){
-            echo "Unable to process your request.";
-            return false;
-        }
+    //    if (!CSRF::check($token, 'register_form')){
+      //      echo "Unable to process your request.";
+         //   return false;
+       // }
          
          if($this->login->checkUsername($username)){
              echo "Username is already exists";

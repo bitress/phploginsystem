@@ -6,7 +6,7 @@ class Message {
     /**
      * @var mixed|null
      */
-    private mixed $user;
+//    private mixed $user;
 
     private Activity $activity;
 
@@ -170,11 +170,14 @@ class Message {
 
         try {
 
-            $sql = "INSERT INTO messages (sender, receiver, message) VALUES (:s, :r, :m)";
+            $datetime = date("Y-m-d h:i:s");
+
+            $sql = "INSERT INTO messages (`sender`, `receiver`, `message`, `date_created`) VALUES (:s, :r, :m, :dt)";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(':s', $this->user, PDO::PARAM_INT);
             $stmt->bindParam(':r', $receiver, PDO::PARAM_INT);
             $stmt->bindParam(':m', $message, PDO::PARAM_STR);
+            $stmt->bindParam(':dt', $datetime, PDO::PARAM_STR);
             if ($stmt->execute()) {
 
                 $data = [

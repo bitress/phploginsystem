@@ -7,7 +7,7 @@ class User
      * @var Database
      */
     private Database $db;
-    private mixed $user;
+   // private  $user;
     private Login $login;
 
 

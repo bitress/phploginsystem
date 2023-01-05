@@ -58,7 +58,7 @@ $secondNum = Session::getSession("second_number");
                         </div>
 
                         <div class="form-group m-0">
-                            <input type="hidden" id="token" value="<?= CSRF::generate('register_form') ?>"
+                            <input type="hidden" id="token" value="<?= CSRF::generate('register_form') ?>">
                             <button type="button" id="register_button" name="register" class="btn btn-primary btn-block">
                                 Register
                             </button>

@@ -59,10 +59,10 @@ class Login
                     /** @var string $hashed_password **/
                     $hashed_password = $row['password'];
 
-                    if (!CSRF::check($token, 'login_form')){
-                        echo "Unable to process your request.";
-                        return false;
-                    }
+       //             if (!CSRF::check($token, 'login_form')){
+         //               echo "Unable to process your request.";
+             //           return false;
+           //         }
 
                     if ($this->isBruteForce()){
                         echo "You have exceeded the maximum login attempts. Try again tomorrow.";
@@ -145,9 +145,11 @@ class Login
         $date = date('Y-m-d');
         $user_ip = Others::getUserIpAddress();
         $login_attempts = $this->getLoginAttempts();
+        
+        // echo $login_attempts;
 
         if ($login_attempts > 0) {
-            $stmt = $this->db->prepare('UPDATE `login_attempts` SET `attempt` = `attempt` + 1 WHERE `ip_address` = :ip AND `date` = :d');
+            $stmt = $this->db->prepare('UPDATE `login_attempts` SET `attempt` = attempt + 1 WHERE `ip_address` = :ip AND `date` = :d');
             // $stmt->execute([$user_ip,$date]);
             $stmt->bindParam(':ip', $user_ip, PDO::PARAM_STR);
             $stmt->bindParam(':d', $date, PDO::PARAM_STR);
@@ -172,7 +174,7 @@ class Login
         $date = date('Y-m-d');
         $user_ip = Others::getUserIpAddress();
 
-        $sql = "SELECT * FROM `login_attempts` WHERE `ip_address` = :ip AND date = :d";
+        $sql = "SELECT * FROM `login_attempts` WHERE `ip_address` = :ip AND `date` = :d";
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':ip', $user_ip, PDO::PARAM_STR);
