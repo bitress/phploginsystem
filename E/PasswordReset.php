@@ -87,7 +87,7 @@ class PasswordReset {
         $expireAt = date("Y-m-d H:i:s", strtotime('+8 hours'));
 
 
-        $sql = "INSERT INTO password_reset (user_id, token, expire_at) VALUES (:u, :t, :e)";
+        $sql = "INSERT INTO `password_reset` (`user_id`, `token`, `expire_at`) VALUES (:u, :t, :e)";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":u", $user, PDO::PARAM_INT);
         $stmt->bindParam(":t", $token, PDO::PARAM_STR);
@@ -125,7 +125,7 @@ class PasswordReset {
      */
     private function expireToken($token){
 
-        $sql = "UPDATE password_reset SET is_valid = '0' , expire_at = now() WHERE token = :t";
+        $sql = "UPDATE `password_reset` SET `is_valid` = '0' , `expire_at` = now() WHERE `token` = :t";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":t", $token, PDO::PARAM_STR);
         if ($stmt->execute()) {

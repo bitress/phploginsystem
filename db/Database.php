@@ -2,8 +2,7 @@
 
 class Database extends PDO{
 
-    private static $_instance;
-
+    private static  $_instance;
 
 
     // Constructor
@@ -25,7 +24,7 @@ class Database extends PDO{
     private function __clone(){}
 
 
-    public static function getInstance()
+    public static function getInstance(): Database
     {
         // create instance if doesn't exist
         if ( self::$_instance === null )

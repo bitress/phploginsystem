@@ -9,7 +9,6 @@ if (isset($_GET['key'])){
 }
 
 
-
 if ($login->isLoggedIn()) {
     header('Location: index.php');
     die();

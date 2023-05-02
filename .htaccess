@@ -1,5 +1,4 @@
-
-Options All -Indexes
+#Options All -Indexes
 RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]

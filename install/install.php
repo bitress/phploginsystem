@@ -1,5 +1,15 @@
 <?php
 
+    require_once 'Installer.php';
+
+
+
+        $installer = new Installer();
+
+
+        $installer->put("DB_NAME","test");
+        $installer->install( 'config.php' );
+
 ?>
 
 <!DOCTYPE html>
@@ -175,7 +185,7 @@
 
                                 <ul class="list-inline pull-right">
                                     <li><button type="button" class="default-btn prev-step">Back</button></li>
-                                    <li><button type="button" id="install_btn" type="button" class="default-btn next-step">Install</button></li>
+                                    <li><button type="button" name="install_btn" id="install_btn" type="button" class="default-btn next-step">Install</button></li>
                                 </ul>
                             </div>
                             <div class="clearfix"></div>

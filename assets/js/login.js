@@ -1,10 +1,10 @@
 $(function() {
 
-    $("#login_form").parsley();
-
     var notyf = new Notyf({duration: 1000, position: {x: 'right', y: 'top',}});
 
-    $("#login_button").on("click", function(e){
+    $("#login_form").on("submit", function(e){
+
+        e.preventDefault();
 
 
         let username = $("#username").val();

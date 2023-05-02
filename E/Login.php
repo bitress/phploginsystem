@@ -48,6 +48,11 @@ class Login
         $password = trim($password);
         try {
 
+            if (!CSRF::check($token, 'login_form')){
+                echo "Unable to process your request.";
+                return false;
+            }
+
             $sql = "SELECT * FROM `users` WHERE `username` = :username";
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":username", $username, PDO::PARAM_STR);
@@ -59,10 +64,6 @@ class Login
                     /** @var string $hashed_password **/
                     $hashed_password = $row['password'];
 
-       //             if (!CSRF::check($token, 'login_form')){
-         //               echo "Unable to process your request.";
-             //           return false;
-           //         }
 
                     if ($this->isBruteForce()){
                         echo "You have exceeded the maximum login attempts. Try again tomorrow.";

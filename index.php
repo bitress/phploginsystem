@@ -29,23 +29,6 @@ include_once 'config/init.php';
     <!--    Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css"/>
-    <style>
-        .online {
-            height: 10px;
-            width: 10px;
-            background-color: green;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .offline {
-            height: 10px;
-            width: 10px;
-            background-color: gray;
-            border-radius: 50%;
-            display: inline-block;
-        }
-    </style>
     <script>
         let id = <?= htmlentities($userDetail['user_id']) ?>;
     </script>
@@ -71,8 +54,8 @@ include_once 'config/init.php';
         <div class="container">
 
             <div class="jumbotron m-4">
-                <img src="<?= htmlentities($userDetail['avatar']) ?>" class="img-thumbnail" width="150px" height="150px">
-                <h3>Hello <?= htmlentities($userDetail['username']) ?> &nbsp;<span id="status"></span></h3>
+                <img src="<?= htmlspecialchars($userDetail['avatar']) ?>" class="img-thumbnail" width="150px" height="150px">
+                <h3>Hello <?= htmlspecialchars($userDetail['username']) ?> &nbsp;<span id="status"></span></h3>
 
                 <a href="logout.php">Logout</a>
             </div>

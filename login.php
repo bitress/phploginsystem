@@ -33,11 +33,11 @@ if ($login->isLoggedIn()) {
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login to <?= APP_NAME ?> </h4>
-                        <form method="POST" id="login_form" class="my-login-validation" novalidate="">
+                        <form method="POST" id="login_form" >
                             <input type="hidden" name="token" id="token" value="<?= htmlentities(CSRF::generate('login_form')); ?>">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input id="username" type="text" class="form-control" name="username" value="" required autofocus>
+                                <input id="username" type="text" class="form-control" name="username" value="" autofocus>
                                 <div class="invalid-feedback">
                                     Email is invalid
                                 </div>
@@ -49,7 +49,7 @@ if ($login->isLoggedIn()) {
                                         Forgot Password?
                                     </a>
                                 </label>
-                                <input id="password" type="password" class="form-control" name="password" required data-eye>
+                                <input id="password" type="password" class="form-control" name="password">
                                 <div class="invalid-feedback">
                                     Password is required
                                 </div>
@@ -57,7 +57,7 @@ if ($login->isLoggedIn()) {
 
 
                             <div class="form-group m-0">
-                                <button type="button" id="login_button" class="btn btn-primary btn-block">
+                                <button type="submit" id="login_button" class="btn btn-primary btn-block">
                                      Log in
                                 </button>
                             </div>
@@ -103,7 +103,6 @@ if ($login->isLoggedIn()) {
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://parsleyjs.org/dist/parsley.min.js"></script>
 <script src="assets/js/sha512.min.js"></script>
 <script src="assets/js/login.js"></script>
 </body>

@@ -6,7 +6,7 @@ class Message {
     /**
      * @var mixed|null
      */
-//    private mixed $user;
+    private int $user;
 
     private Activity $activity;
 
