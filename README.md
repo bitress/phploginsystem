@@ -84,7 +84,7 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ## Author
 
-This system was created by [bitress]. For questions or support, you can contact me at [byteress@gmail.com].
+This system was created by [bitress](https://github.com/bitress). For questions or support, you can contact me at [byteress@gmail.com].
 
 ---
 
